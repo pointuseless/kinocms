@@ -1,10 +1,12 @@
+from __future__ import annotations
+
 from django.db import models
 
 
 class Theater:
 
-    pass
-
+    def __init__(self, name: str, address: str, halls: list[Hall]):
+        pass
 
 class Hall:
 
@@ -22,6 +24,7 @@ class Place:
 
 
 class Customer:
+
     pass
 
 
