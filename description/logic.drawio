@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-01-16T09:21:05.190Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="jeAFYZ7P5IdURkNs4MiT" version="14.2.4" type="github">
+<mxfile host="app.diagrams.net" modified="2021-01-16T09:21:32.817Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="drrQkM5uAsCYmVwd75Pb" version="14.2.4" type="github">
   <diagram id="XUp5C-NoZWZrKDnWrXrD" name="Page-1">
     <mxGraphModel dx="865" dy="1626" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -51,8 +51,8 @@
         <mxCell id="sEvrqUnNfx4oeJju05TA-7" value="Show&lt;br&gt;&lt;br&gt;+ film&lt;br&gt;+ time&lt;br&gt;+ hall" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="250" y="320" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="sEvrqUnNfx4oeJju05TA-8" value="Film&lt;br&gt;&lt;br&gt;+ duration&lt;br&gt;+ name&lt;br&gt;+ description" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="470" y="300" width="120" height="80" as="geometry" />
+        <mxCell id="sEvrqUnNfx4oeJju05TA-8" value="Film&lt;br&gt;&lt;br&gt;+ duration&lt;br&gt;+ name&lt;br&gt;+ description&lt;br&gt;+ date?" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="470" y="295" width="120" height="90" as="geometry" />
         </mxCell>
         <mxCell id="sEvrqUnNfx4oeJju05TA-9" value="Offer" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="240" y="-80" width="120" height="60" as="geometry" />
