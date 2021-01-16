@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-01-16T09:03:10.811Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="FyBCUDPz0HVy7PLocsBv" version="14.2.4" type="github">
+<mxfile host="app.diagrams.net" modified="2021-01-16T09:04:54.032Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.88 Safari/537.36" etag="eqLgWj7eikcQEVPlCIpX" version="14.2.4" type="github">
   <diagram id="XUp5C-NoZWZrKDnWrXrD" name="Page-1">
     <mxGraphModel dx="1038" dy="548" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -25,8 +25,8 @@
         <mxCell id="sEvrqUnNfx4oeJju05TA-7" value="Show" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="490" y="680" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="sEvrqUnNfx4oeJju05TA-8" value="Film" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="560" y="570" width="120" height="60" as="geometry" />
+        <mxCell id="sEvrqUnNfx4oeJju05TA-8" value="Film&lt;br&gt;&lt;br&gt;+ duration&lt;br&gt;+ name&lt;br&gt;+ description" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="354" y="250" width="120" height="80" as="geometry" />
         </mxCell>
         <mxCell id="sEvrqUnNfx4oeJju05TA-9" value="Offer" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="140" y="570" width="120" height="60" as="geometry" />
