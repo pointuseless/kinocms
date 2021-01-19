@@ -18,10 +18,10 @@ class Place:
         self.__occupied = False
         self.id = identification
 
-    def occupy(self):
+    def occupy(self) -> None:
         self.__occupied = True
 
-    def free(self):
+    def free(self) -> None:
         self.__occupied = False
 
     def clone(self) -> Place:
@@ -34,14 +34,14 @@ class Row:
         self.id = identification
         self.places = places
 
-    def list_places(self):
+    def list_places(self) -> list[Place]:
         return self.places
 
     def clone(self) -> Row:
         places = [place.clone() for place in self.places]
         return Row(self.id, places)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Place]:
         return iter(self.places)
 
 
@@ -60,7 +60,7 @@ class Sector:
         rows = [row.clone() for row in self.rows]
         return Sector(rows, self.type)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Row]:
         return iter(self.rows)
 
 
@@ -79,10 +79,10 @@ class Hall:
         sectors = [sector.clone() for sector in self.sectors]
         return Hall(sectors, self.technology)
 
-    def iter_places(self):
+    def iter_places(self) -> PlaceAggregateIterator:
         return PlaceAggregateIterator(self.sectors)
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Sector]:
         return iter(self.sectors)
 
 
@@ -125,7 +125,7 @@ class PlaceAggregateIterator:
         except IndexError:
             raise StopIteration
 
-    def __iter__(self):
+    def __iter__(self) -> PlaceAggregateIterator:
         return self
 
 
@@ -146,7 +146,7 @@ class Show:
     def iter_places(self) -> PlaceAggregateIterator:
         return self.hall.iter_places()
 
-    def __iter__(self):
+    def __iter__(self) -> Iterator[Sector]:
         return iter(self.hall)
 
 
