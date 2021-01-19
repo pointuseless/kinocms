@@ -1,7 +1,51 @@
 from __future__ import annotations
+
 from datetime import timedelta, datetime
 from functools import singledispatchmethod
 from collections.abc import Iterator
+
+
+# Либо тикету (можно его как отображение представить), давать уже готовую для него инфу
+# А создавать тикет с пережеванной инфой Фабрикой, например
+# Фабрика же может заполнять билет доп инфо, например адресом кинотеатра, поздравлением с нг (новогодняя фабркиа) и тп.
+class Ticket:
+
+    def __init__(self, movie: str,
+                 technology: str,
+                 hall: int,
+                 row: int,
+                 place: int,
+                 time: str,
+                 price: float,
+                 additional_info: str = ''):
+        self.movie = movie
+        self.technology = technology
+        self.hall = hall
+        self.row = row
+        self.place = place
+        self.time = time
+        self.price = price
+        self.additional_info = additional_info
+
+
+# TODO: Не уверен, что именно так оно должно работать. Порисовать-подумать.
+class Purchase:
+
+    def __init__(self, amount: int, pay_system: PaySystemInterface):
+        self.amount = amount
+        self.pay_system = pay_system
+
+    def validate(self) -> bool:
+        if self.pay_system.validate_payment(self.amount):
+            return True
+        else:
+            return False
+
+
+class PaySystemInterface:
+    """ Интерфейс внешней платежной системы """
+    def validate_payment(self, amount: int) -> bool:
+        raise NotImplementedError
 
 
 class Movie:
@@ -51,9 +95,9 @@ class Row:
 
 class Sector:
 
-    def __init__(self, rows: list[Row], row_type: str):
+    def __init__(self, rows: list[Row], rows_type: str):
         self.rows = rows
-        self.type = row_type
+        self.type = rows_type
 
     def list_places(self) -> list[Place]:
         places = []
@@ -90,23 +134,38 @@ class Hall:
         return iter(self.sectors)
 
 
+# TODO: Ужасный класс и нарушает все что можно!
 class PriceList:
 
+    # TODO: Потенциальные ошибки ввода (несовпадение) в Секторе и тут!
     def __init__(self, cheap: int, medium: int, vip: int):
-        self.cheap = cheap
-        self.medium = medium
-        self.vip = vip
+        self._cheap = [cheap]
+        self._medium = [medium]
+        self._vip = [vip]
+        self._prices = {'CHEAP': self._cheap,
+                        'MEDIUM': self._medium,
+                        'VIP': self._vip}
 
-    def sector_price(self, sector: Sector):
-        if sector.type == 'CHEAP':
-            return self.cheap
-        elif sector.type == 'MEDIUM':
-            return self.medium
-        elif sector.type == 'VIP':
-            return self.vip
+    @property
+    def cheap(self):
+        return self._cheap[0]
+
+    @cheap.setter
+    def cheap(self, price: int):
+        self._cheap[0] = price
+
+    def _get_sector_price(self, sector: Sector):
+        return self._prices[sector.type][0]
+
+    def get_place_price(self, show: Show, place: Place) -> int:
+        for sector in show.hall:
+            if place in sector.list_places():
+                return self._get_sector_price(sector)
+        else:
+            raise RuntimeError('Place is not present')
 
     def clone(self) -> PriceList:
-        return PriceList(self.cheap, self.medium, self.vip)
+        return PriceList(*self._cheap, *self._medium, *self._vip)
 
 
 class PlaceAggregateIterator:
@@ -144,15 +203,19 @@ class Show:
                  price_list: PriceList):
         self.movie = movie
         self.hall = hall.clone()
-        self.showtime = showtime
+        self._showtime = showtime
         self.price_list = price_list
 
-    def place_price(self, place: Place) -> int:
-        for sector in self.hall:
-            if place in sector.list_places():
-                return self.price_list.sector_price(sector)
-        else:
-            raise RuntimeError('Place is not present')
+    @property
+    def showtime(self) -> datetime:
+        return self._showtime
+
+    @showtime.setter
+    def showtime(self, new_showtime: datetime) -> None:
+        self._showtime = new_showtime
+
+    def get_price(self, place: Place):
+        return self.price_list.get_place_price(self, place)
 
     def list_places(self) -> list[Place]:
         return self.hall.list_places()
@@ -164,17 +227,15 @@ class Show:
         return iter(self.hall)
 
 
-# class ShowClonesRegistry:
-#
-#     __shows = []
-#
-#     @staticmethod
-#     def from_base(base: Show,
-#                   new_showtime: datetime = datetime.now(),
-#                   link_old_price: bool = False) -> Show:
-#         hall_copy = base.hall.clone()
-#         new_price_list = base.price_list if link_old_price else base.price_list.clone()
-#         return Show(movie, hall_copy, new_showtime, new_price_list)
+class ShowCloneFactory:
+
+    @staticmethod
+    def from_base(base: Show,
+                  new_showtime: datetime = datetime.now(),
+                  link_old_price: bool = False) -> Show:
+        hall_copy = base.hall.clone()
+        new_price_list = base.price_list if link_old_price else base.price_list.clone()
+        return Show(base.movie, hall_copy, new_showtime, new_price_list)
 
 
 places = [[Place(i * 100 + j) for j in range(1, 10)] for i in range(1, 10)]
@@ -198,4 +259,10 @@ for sector in show:
 
 place = show.list_places()[74]
 print(place.id)
-print(show.place_price(place))
+print(show.get_price(place))
+
+show2 = ShowCloneFactory.from_base(show, link_old_price=True)
+print(show2.price_list.cheap)
+show.price_list.cheap = 35
+print(show2.price_list.cheap)
+print(show2.price_list._prices)
