@@ -55,42 +55,47 @@ class Movie:
         self.duration = duration
 
 
-class PlaceContainerWithPrice:
+class ContainerWithPrice:
+
+    def __init__(self, price: int):
+        self._price = price
 
     def get_price(self) -> int:
-        raise NotImplementedError
+        return self._price
 
     def set_price(self, price: int) -> None:
+        self._price = price
+
+
+class PlaceContainerInterface:
+
+    def clone(self) -> PlaceContainerInterface:
         raise NotImplementedError
 
 
-class PlaceContainer:
+class PlaceAggregate(PlaceContainerInterface):
 
-    def clone(self) -> PlaceContainer:
-        raise NotImplementedError
-
-
-class PlaceAggregate(PlaceContainer):
-
-    def __init__(self, nested: list[PlaceContainer]):
+    def __init__(self, nested: list[PlaceContainerInterface]):
         self._nested = nested
 
-    def clone(self) -> PlaceContainer:
+    def clone(self) -> PlaceContainerInterface:
         nested_clones = [nested.clone() for nested in self._nested]
         parameters = self.__dict__
         parameters['_nested'] = nested_clones
         return self.__class__(**parameters)
 
 
+class PlaceAggregateWithPrice(PlaceAggregate, ContainerWithPrice)
+
 
 # Возможно, место вообще не нужно. Row может хранить список мест со значение True, False
 # Занят/свободен может быть Стейтом
-class Place(PlaceContainer):
+class Place(ContainerWithPrice, PlaceContainerInterface):
 
     def __init__(self, identification: int, price: int = 0):
         self._occupied = False
         self._id = identification
-        self._price = price
+        super().__init__(price)
 
     def is_occupied(self) -> bool:
         return self._occupied
@@ -101,17 +106,11 @@ class Place(PlaceContainer):
     def free(self) -> None:
         self._occupied = False
 
-    def get_price(self) -> int:
-        return self._price
-
-    def set_price(self, price: int) -> None:
-        self._price = price
-
     def clone(self) -> Place:
         return Place(self._id, self._price)
 
 
-class Row:
+class Row(PlaceAggregate):
 
     def __init__(self, identification: int, places: list[Place]):
         self.id = identification
