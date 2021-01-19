@@ -1,6 +1,7 @@
 from __future__ import annotations
 from datetime import timedelta, datetime
 from functools import singledispatchmethod
+from collections.abc import Iterator
 
 
 class Movie:
@@ -33,8 +34,8 @@ class Row:
         self.id = identification
         self.places = places
 
-    # def list_places(self):
-    #     return self.places
+    def list_places(self):
+        return self.places
 
     def clone(self) -> Row:
         places = [place.clone() for place in self.places]
@@ -50,9 +51,10 @@ class Sector:
         self.rows = rows
         self.type = row_type
 
-    # def list_places(self):
-    #     places = [row.list_places() for row in self.rows]
-    #     return places
+    def list_places(self) -> list[Place]:
+        places = []
+        [places.extend(row.list_places()) for row in self.rows]
+        return places
 
     def clone(self) -> Sector:
         rows = [row.clone() for row in self.rows]
@@ -68,16 +70,20 @@ class Hall:
         self.sectors = sectors
         self.technology = technology
 
-    # def list_places(self):
-    #     places = [sector.list_places() for sector in self.sectors]
-    #     return places
+    def list_places(self) -> list[Place]:
+        places = []
+        [places.extend(sector.list_places()) for sector in self.sectors]
+        return places
 
     def clone(self) -> Hall:
         sectors = [sector.clone() for sector in self.sectors]
         return Hall(sectors, self.technology)
 
+    def iter_places(self):
+        return PlaceAggregateIterator(self.sectors)
+
     def __iter__(self):
-        return CompositeIterator(self.sectors)
+        return iter(self.sectors)
 
 
 class PriceList:
@@ -96,21 +102,21 @@ class PriceList:
             return self.vip
 
 
-class CompositeIterator:
+class PlaceAggregateIterator:
 
     def __init__(self, composite):
         self.nested = self.make_nested(composite)
         self.current = 0
 
     @singledispatchmethod
-    def make_nested(self, composite):
-        return [CompositeIterator(component) for component in composite]
+    def make_nested(self, composite) -> list[PlaceAggregateIterator]:
+        return [PlaceAggregateIterator(component) for component in composite]
 
     @make_nested.register(Row)
-    def _(self, composite):
+    def _(self, composite) -> list[Iterator[Place]]:
         return [iter(composite)]
 
-    def __next__(self):
+    def __next__(self) -> Place:
         try:
             return next(self.nested[self.current])
         except StopIteration:
@@ -119,17 +125,26 @@ class CompositeIterator:
         except IndexError:
             raise StopIteration
 
+    def __iter__(self):
+        return self
+
 
 class Show:
 
-    def __init__(self, movie: Movie, hall: Hall, showtime: datetime, price_list: PriceList):
+    def __init__(self, movie: Movie,
+                 hall: Hall,
+                 showtime: datetime,
+                 price_list: PriceList):
         self.movie = movie
         self.hall = hall.clone()
         self.showtime = showtime
         self.price_list = price_list
 
-    # def list_places(self) -> list[Place]:
-    #     return self.hall.list_places()
+    def list_places(self) -> list[Place]:
+        return self.hall.list_places()
+
+    def iter_places(self) -> PlaceAggregateIterator:
+        return self.hall.iter_places()
 
     def __iter__(self):
         return iter(self.hall)
@@ -146,5 +161,13 @@ price_list = PriceList(50, 70, 90)
 
 show = Show(movie, hall, datetime(2021, 2, 12, 14, 30), price_list)
 
-for place in show:
+for place in show.iter_places():
     print(place.id)
+
+for place in show.list_places():
+    place.occupy()
+    print(place.__dict__['_Place__occupied'])
+
+for sector in show:
+    print(sector.type)
+
