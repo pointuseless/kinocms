@@ -55,25 +55,60 @@ class Movie:
         self.duration = duration
 
 
+class PlaceContainerWithPrice:
+
+    def get_price(self) -> int:
+        raise NotImplementedError
+
+    def set_price(self, price: int) -> None:
+        raise NotImplementedError
+
+
+class PlaceContainer:
+
+    def clone(self) -> PlaceContainer:
+        raise NotImplementedError
+
+
+class PlaceAggregate(PlaceContainer):
+
+    def __init__(self, nested: list[PlaceContainer]):
+        self._nested = nested
+
+    def clone(self) -> PlaceContainer:
+        nested_clones = [nested.clone() for nested in self._nested]
+        parameters = self.__dict__
+        parameters['_nested'] = nested_clones
+        return self.__class__(**parameters)
+
+
+
 # Возможно, место вообще не нужно. Row может хранить список мест со значение True, False
-class Place:
+# Занят/свободен может быть Стейтом
+class Place(PlaceContainer):
 
-    def __init__(self, identification: int):
-        self.__occupied = False
-        self.id = identification
+    def __init__(self, identification: int, price: int = 0):
+        self._occupied = False
+        self._id = identification
+        self._price = price
 
-    @property
-    def occupied(self):
-        return self.__occupied
+    def is_occupied(self) -> bool:
+        return self._occupied
 
     def occupy(self) -> None:
-        self.__occupied = True
+        self._occupied = True
 
     def free(self) -> None:
-        self.__occupied = False
+        self._occupied = False
+
+    def get_price(self) -> int:
+        return self._price
+
+    def set_price(self, price: int) -> None:
+        self._price = price
 
     def clone(self) -> Place:
-        return Place(self.id)
+        return Place(self._id, self._price)
 
 
 class Row:
@@ -250,7 +285,7 @@ price_list = PriceList(50, 70, 90)
 show = Show(movie, hall, datetime(2021, 2, 12, 14, 30), price_list)
 
 for place in show.iter_places():
-    print(place.id)
+    print(place._id)
 
 for sector in show:
     print(sector.type)
@@ -258,7 +293,7 @@ for sector in show:
 # --------- Вот теперь самое интересное: узнать цену места! --------- #
 
 place = show.list_places()[74]
-print(place.id)
+print(place._id)
 print(show.get_price(place))
 
 show2 = ShowCloneFactory.from_base(show, link_old_price=True)
