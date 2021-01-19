@@ -18,6 +18,10 @@ class Place:
         self.__occupied = False
         self.id = identification
 
+    @property
+    def occupied(self):
+        return self.__occupied
+
     def occupy(self) -> None:
         self.__occupied = True
 
@@ -101,6 +105,9 @@ class PriceList:
         elif sector.type == 'VIP':
             return self.vip
 
+    def clone(self) -> PriceList:
+        return PriceList(self.cheap, self.medium, self.vip)
+
 
 class PlaceAggregateIterator:
 
@@ -140,6 +147,13 @@ class Show:
         self.showtime = showtime
         self.price_list = price_list
 
+    def place_price(self, place: Place) -> int:
+        for sector in self.hall:
+            if place in sector.list_places():
+                return self.price_list.sector_price(sector)
+        else:
+            raise RuntimeError('Place is not present')
+
     def list_places(self) -> list[Place]:
         return self.hall.list_places()
 
@@ -148,6 +162,19 @@ class Show:
 
     def __iter__(self) -> Iterator[Sector]:
         return iter(self.hall)
+
+
+# class ShowClonesRegistry:
+#
+#     __shows = []
+#
+#     @staticmethod
+#     def from_base(base: Show,
+#                   new_showtime: datetime = datetime.now(),
+#                   link_old_price: bool = False) -> Show:
+#         hall_copy = base.hall.clone()
+#         new_price_list = base.price_list if link_old_price else base.price_list.clone()
+#         return Show(movie, hall_copy, new_showtime, new_price_list)
 
 
 places = [[Place(i * 100 + j) for j in range(1, 10)] for i in range(1, 10)]
@@ -164,10 +191,11 @@ show = Show(movie, hall, datetime(2021, 2, 12, 14, 30), price_list)
 for place in show.iter_places():
     print(place.id)
 
-for place in show.list_places():
-    place.occupy()
-    print(place.__dict__['_Place__occupied'])
-
 for sector in show:
     print(sector.type)
 
+# --------- Вот теперь самое интересное: узнать цену места! --------- #
+
+place = show.list_places()[74]
+print(place.id)
+print(show.place_price(place))
