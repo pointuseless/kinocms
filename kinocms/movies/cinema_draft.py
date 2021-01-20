@@ -3,6 +3,7 @@ from __future__ import annotations
 from datetime import timedelta, datetime
 from functools import singledispatchmethod
 from collections.abc import Iterator
+from typing import Union
 
 
 class Movie:
@@ -44,6 +45,10 @@ class PlaceAggregate(PlaceContainerInterface):
         super().__init__(**kwargs)
 
     @property
+    def places(self) -> list[Place]:
+        return list(self.iter_places())
+
+    @property
     def nested(self) -> list[PriceContainer]:
         return self._nested
 
@@ -55,7 +60,10 @@ class PlaceAggregate(PlaceContainerInterface):
         clone.__dict__ = parameters
         return clone
 
-    def __iter__(self) -> Iterator[PriceContainer]:
+    def iter_places(self) -> PlaceAggregateIterator:
+        return PlaceAggregateIterator(self)
+
+    def __iter__(self) -> Iterator[Union[PriceContainer, PlaceAggregate]]:
         return iter(self.nested)
 
 
@@ -85,12 +93,11 @@ class Row(PlaceAggregate, PriceContainer):
 
     def __init__(self, identification: int, places: list[Place], price: int = 0):
         self.id = identification
-        self.places = places
         super().__init__(nested=places, price=price)
 
     def set_price(self, price: int) -> None:
         super().set_price(price)
-        for each in self.places:
+        for each in self.nested:
             each.set_price(price)
 
 
@@ -100,6 +107,11 @@ class Sector(PlaceAggregate, PriceContainer):
         self.type = rows_type
         super().__init__(nested=rows, price=price)
 
+    def set_price(self, price: int) -> None:
+        super().set_price(price)
+        for each in self.nested:
+            each.set_price(price)
+
 
 class Hall(PlaceAggregate):
 
@@ -107,18 +119,15 @@ class Hall(PlaceAggregate):
         self.technology = technology
         super().__init__(nested=sectors)
 
-    def iter_places(self) -> PlaceAggregateIterator:
-        return PlaceAggregateIterator(self.nested)
-
 
 class PlaceAggregateIterator:
 
-    def __init__(self, composite):
+    def __init__(self, composite: PlaceAggregate):
         self.nested = self.make_nested(composite)
         self.current = 0
 
     @singledispatchmethod
-    def make_nested(self, composite) -> list[PlaceAggregateIterator]:
+    def make_nested(self, composite: PlaceAggregate) -> list[PlaceAggregateIterator]:
         return [PlaceAggregateIterator(component) for component in composite]
 
     @make_nested.register(Row)
@@ -181,3 +190,5 @@ for sector in show:
 
 place = list(show.iter_places())[74]
 print(place._id)
+print(show.hall.nested[0].set_price(40))
+print(show.hall.places[15].get_price())
