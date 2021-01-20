@@ -13,13 +13,13 @@ class Movie:
         self.duration = duration
 
 
-class PlaceContainerInterface:
+class CloneablePlaceContainerInterface:
 
-    def clone(self) -> PlaceContainerInterface:
+    def clone(self) -> CloneablePlaceContainerInterface:
         raise NotImplementedError
 
 
-class PriceContainer(PlaceContainerInterface):
+class PriceContainer(CloneablePlaceContainerInterface):
 
     def __init__(self, price: int = 0, **kwargs):
         self._price = price
@@ -35,7 +35,7 @@ class PriceContainer(PlaceContainerInterface):
         raise NotImplementedError
 
 
-class PlaceAggregate(PlaceContainerInterface):
+class PlaceAggregate(CloneablePlaceContainerInterface):
 
     def __init__(self, nested: list[PriceContainer], **kwargs):
         self._nested = nested
