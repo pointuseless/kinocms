@@ -176,6 +176,21 @@ class Show:
         return iter(self.hall)
 
 
+class Constructor:
+
+    @classmethod
+    def create_places(cls, quantity: int, row_index: int) -> list[Place]:
+        return [Place(row_index * 1000 + i) for i in range(1, quantity + 1)]
+
+    @classmethod
+    def create_rows(cls, first: int, last: int, places: int) -> list[Row]:
+        rows = []
+        for i in range(first, last + 1):
+            row = Row(i, cls.create_places(places, i))
+            rows.append(row)
+        return rows
+
+
 places = [[Place(i * 100 + j) for j in range(1, 10)] for i in range(1, 10)]
 rows = [Row(i + 1, places[i]) for i in range(9)]
 sectors = [Sector(rows[: 3], 'CHEAP'), Sector(rows[3: 8], 'MEDIUM'), Sector(rows[8:], 'VIP')]
