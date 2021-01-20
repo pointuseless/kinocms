@@ -15,9 +15,6 @@ class Movie:
 
 class PlaceContainerInterface:
 
-    # def list_places(self) -> list[Place]:
-    #     raise NotImplementedError
-
     def clone(self) -> PlaceContainerInterface:
         raise NotImplementedError
 
