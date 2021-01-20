@@ -190,9 +190,12 @@ class Constructor:
             rows.append(row)
         return rows
 
+    @classmethod
+    def create_row(cls, identification: int, places: int) -> Row:
+        return Row(identification, cls.create_places(places, identification))
 
-places = [[Place(i * 100 + j) for j in range(1, 10)] for i in range(1, 10)]
-rows = [Row(i + 1, places[i]) for i in range(9)]
+
+rows = Constructor.create_rows(1, 9, 15)
 sectors = [Sector(rows[: 3], 'CHEAP'), Sector(rows[3: 8], 'MEDIUM'), Sector(rows[8:], 'VIP')]
 hall = Hall(sectors, 'Dolby Digital')
 
