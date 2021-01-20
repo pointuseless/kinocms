@@ -5,49 +5,6 @@ from functools import singledispatchmethod
 from collections.abc import Iterator
 
 
-# Либо тикету (можно его как отображение представить), давать уже готовую для него инфу
-# А создавать тикет с пережеванной инфой Фабрикой, например
-# Фабрика же может заполнять билет доп инфо, например адресом кинотеатра, поздравлением с нг (новогодняя фабркиа) и тп.
-class Ticket:
-
-    def __init__(self, movie: str,
-                 technology: str,
-                 hall: int,
-                 row: int,
-                 place: int,
-                 time: str,
-                 price: float,
-                 additional_info: str = ''):
-        self.movie = movie
-        self.technology = technology
-        self.hall = hall
-        self.row = row
-        self.place = place
-        self.time = time
-        self.price = price
-        self.additional_info = additional_info
-
-
-# TODO: Не уверен, что именно так оно должно работать. Порисовать-подумать.
-class Purchase:
-
-    def __init__(self, amount: int, pay_system: PaySystemInterface):
-        self.amount = amount
-        self.pay_system = pay_system
-
-    def validate(self) -> bool:
-        if self.pay_system.validate_payment(self.amount):
-            return True
-        else:
-            return False
-
-
-class PaySystemInterface:
-    """ Интерфейс внешней платежной системы """
-    def validate_payment(self, amount: int) -> bool:
-        raise NotImplementedError
-
-
 class Movie:
 
     def __init__(self, title: str, duration: timedelta):
@@ -55,10 +12,20 @@ class Movie:
         self.duration = duration
 
 
-class ContainerWithPrice:
+class PlaceContainerInterface:
 
-    def __init__(self, price: int):
+    # def list_places(self) -> list[Place]:
+    #     raise NotImplementedError
+
+    def clone(self) -> PlaceContainerInterface:
+        raise NotImplementedError
+
+
+class PriceContainer(PlaceContainerInterface):
+
+    def __init__(self, price: int = 0, **kwargs):
         self._price = price
+        super().__init__(**kwargs)
 
     def get_price(self) -> int:
         return self._price
@@ -66,36 +33,40 @@ class ContainerWithPrice:
     def set_price(self, price: int) -> None:
         self._price = price
 
-
-class PlaceContainerInterface:
-
-    def clone(self) -> PlaceContainerInterface:
+    def clone(self) -> PriceContainer:
         raise NotImplementedError
 
 
 class PlaceAggregate(PlaceContainerInterface):
 
-    def __init__(self, nested: list[PlaceContainerInterface]):
+    def __init__(self, nested: list[PriceContainer], **kwargs):
         self._nested = nested
+        super().__init__(**kwargs)
 
-    def clone(self) -> PlaceContainerInterface:
+    @property
+    def nested(self) -> list[PriceContainer]:
+        return self._nested
+
+    def clone(self) -> PlaceAggregate:
         nested_clones = [nested.clone() for nested in self._nested]
         parameters = self.__dict__
         parameters['_nested'] = nested_clones
-        return self.__class__(**parameters)
+        clone = object.__new__(self.__class__)
+        clone.__dict__ = parameters
+        return clone
 
-
-class PlaceAggregateWithPrice(PlaceAggregate, ContainerWithPrice)
+    def __iter__(self) -> Iterator[PriceContainer]:
+        return iter(self.nested)
 
 
 # Возможно, место вообще не нужно. Row может хранить список мест со значение True, False
 # Занят/свободен может быть Стейтом
-class Place(ContainerWithPrice, PlaceContainerInterface):
+class Place(PriceContainer):
 
     def __init__(self, identification: int, price: int = 0):
         self._occupied = False
         self._id = identification
-        super().__init__(price)
+        super().__init__(price=price)
 
     def is_occupied(self) -> bool:
         return self._occupied
@@ -107,99 +78,37 @@ class Place(ContainerWithPrice, PlaceContainerInterface):
         self._occupied = False
 
     def clone(self) -> Place:
-        return Place(self._id, self._price)
+        return Place(self._id, self.get_price())
 
 
-class Row(PlaceAggregate):
+class Row(PlaceAggregate, PriceContainer):
 
-    def __init__(self, identification: int, places: list[Place]):
+    def __init__(self, identification: int, places: list[Place], price: int = 0):
         self.id = identification
         self.places = places
+        super().__init__(nested=places, price=price)
 
-    def list_places(self) -> list[Place]:
-        return self.places
-
-    def clone(self) -> Row:
-        places = [place.clone() for place in self.places]
-        return Row(self.id, places)
-
-    def __iter__(self) -> Iterator[Place]:
-        return iter(self.places)
+    def set_price(self, price: int) -> None:
+        super().set_price(price)
+        for each in self.places:
+            each.set_price(price)
 
 
-class Sector:
+class Sector(PlaceAggregate, PriceContainer):
 
-    def __init__(self, rows: list[Row], rows_type: str):
-        self.rows = rows
+    def __init__(self, rows: list[Row], rows_type: str, price: int = 0):
         self.type = rows_type
-
-    def list_places(self) -> list[Place]:
-        places = []
-        [places.extend(row.list_places()) for row in self.rows]
-        return places
-
-    def clone(self) -> Sector:
-        rows = [row.clone() for row in self.rows]
-        return Sector(rows, self.type)
-
-    def __iter__(self) -> Iterator[Row]:
-        return iter(self.rows)
+        super().__init__(nested=rows, price=price)
 
 
-class Hall:
+class Hall(PlaceAggregate):
 
     def __init__(self, sectors: list[Sector], technology: str):
-        self.sectors = sectors
         self.technology = technology
-
-    def list_places(self) -> list[Place]:
-        places = []
-        [places.extend(sector.list_places()) for sector in self.sectors]
-        return places
-
-    def clone(self) -> Hall:
-        sectors = [sector.clone() for sector in self.sectors]
-        return Hall(sectors, self.technology)
+        super().__init__(nested=sectors)
 
     def iter_places(self) -> PlaceAggregateIterator:
-        return PlaceAggregateIterator(self.sectors)
-
-    def __iter__(self) -> Iterator[Sector]:
-        return iter(self.sectors)
-
-
-# TODO: Ужасный класс и нарушает все что можно!
-class PriceList:
-
-    # TODO: Потенциальные ошибки ввода (несовпадение) в Секторе и тут!
-    def __init__(self, cheap: int, medium: int, vip: int):
-        self._cheap = [cheap]
-        self._medium = [medium]
-        self._vip = [vip]
-        self._prices = {'CHEAP': self._cheap,
-                        'MEDIUM': self._medium,
-                        'VIP': self._vip}
-
-    @property
-    def cheap(self):
-        return self._cheap[0]
-
-    @cheap.setter
-    def cheap(self, price: int):
-        self._cheap[0] = price
-
-    def _get_sector_price(self, sector: Sector):
-        return self._prices[sector.type][0]
-
-    def get_place_price(self, show: Show, place: Place) -> int:
-        for sector in show.hall:
-            if place in sector.list_places():
-                return self._get_sector_price(sector)
-        else:
-            raise RuntimeError('Place is not present')
-
-    def clone(self) -> PriceList:
-        return PriceList(*self._cheap, *self._medium, *self._vip)
+        return PlaceAggregateIterator(self.nested)
 
 
 class PlaceAggregateIterator:
@@ -233,12 +142,10 @@ class Show:
 
     def __init__(self, movie: Movie,
                  hall: Hall,
-                 showtime: datetime,
-                 price_list: PriceList):
+                 showtime: datetime):
         self.movie = movie
         self.hall = hall.clone()
         self._showtime = showtime
-        self.price_list = price_list
 
     @property
     def showtime(self) -> datetime:
@@ -248,28 +155,11 @@ class Show:
     def showtime(self, new_showtime: datetime) -> None:
         self._showtime = new_showtime
 
-    def get_price(self, place: Place):
-        return self.price_list.get_place_price(self, place)
-
-    def list_places(self) -> list[Place]:
-        return self.hall.list_places()
-
     def iter_places(self) -> PlaceAggregateIterator:
         return self.hall.iter_places()
 
     def __iter__(self) -> Iterator[Sector]:
         return iter(self.hall)
-
-
-class ShowCloneFactory:
-
-    @staticmethod
-    def from_base(base: Show,
-                  new_showtime: datetime = datetime.now(),
-                  link_old_price: bool = False) -> Show:
-        hall_copy = base.hall.clone()
-        new_price_list = base.price_list if link_old_price else base.price_list.clone()
-        return Show(base.movie, hall_copy, new_showtime, new_price_list)
 
 
 places = [[Place(i * 100 + j) for j in range(1, 10)] for i in range(1, 10)]
@@ -279,9 +169,7 @@ hall = Hall(sectors, 'Dolby Digital')
 
 movie = Movie('Super-Hero', timedelta(hours=1, minutes=55))
 
-price_list = PriceList(50, 70, 90)
-
-show = Show(movie, hall, datetime(2021, 2, 12, 14, 30), price_list)
+show = Show(movie, hall, datetime(2021, 2, 12, 14, 30))
 
 for place in show.iter_places():
     print(place._id)
@@ -291,12 +179,5 @@ for sector in show:
 
 # --------- Вот теперь самое интересное: узнать цену места! --------- #
 
-place = show.list_places()[74]
+place = list(show.iter_places())[74]
 print(place._id)
-print(show.get_price(place))
-
-show2 = ShowCloneFactory.from_base(show, link_old_price=True)
-print(show2.price_list.cheap)
-show.price_list.cheap = 35
-print(show2.price_list.cheap)
-print(show2.price_list._prices)
