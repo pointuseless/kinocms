@@ -4,46 +4,33 @@ from functools import singledispatchmethod
 from typing import Union
 from collections.abc import Iterator
 
-from kinocms.movies.basic.structure.abc import CloneablePlaceContainerInterface, PriceContainer
+from kinocms.movies.basic.structure.places.abc import PriceContainer, \
+    CloneablePlaceAggregate
 
 
-class PlaceAggregate(CloneablePlaceContainerInterface):
-
-    def __init__(self, nested: list[PriceContainer], **kwargs):
-        self._nested = nested
-        super().__init__(**kwargs)
+class PlaceAggregate(CloneablePlaceAggregate):
 
     @property
     def places(self) -> list[Place]:
         return list(self.iter_places())
 
-    @property
-    def nested(self) -> list[PriceContainer]:
-        return self._nested
-
-    def clone(self) -> PlaceAggregate:
-        nested_clones = [nested.clone() for nested in self._nested]
-        parameters = self.__dict__
-        parameters['_nested'] = nested_clones
-        clone = object.__new__(self.__class__)
-        clone.__dict__ = parameters
-        return clone
-
     def iter_places(self) -> PlaceAggregateIterator:
         return PlaceAggregateIterator(self)
 
     def __iter__(self) -> Iterator[Union[PriceContainer, PlaceAggregate]]:
-        return iter(self.nested)
+        return iter(self._nested)
 
 
-# Возможно, место вообще не нужно. Row может хранить список мест со значение True, False
-# Занят/свободен может быть Стейтом
 class Place(PriceContainer):
 
     def __init__(self, identification: int, price: int = 0):
         self._occupied = False
         self._id = identification
         super().__init__(price=price)
+
+    @property
+    def id(self) -> int:
+        return self._id
 
     def is_occupied(self) -> bool:
         return self._occupied
@@ -95,23 +82,6 @@ class Hall(PlaceAggregate):
     @property
     def sectors(self) -> list[Sector]:
         return list(iter(self))
-
-
-class PlaceAggregateIteratorInterface:
-
-    @singledispatchmethod
-    def make_nested(self, composite: PlaceAggregate) -> list[PlaceAggregateIteratorInterface]:
-        raise NotImplementedError
-
-    @make_nested.register(Row)
-    def _(self, composite) -> list[Iterator[Place]]:
-        raise NotImplementedError
-
-    def __next__(self) -> Place:
-        raise NotImplementedError
-
-    def __iter__(self) -> PlaceAggregateIterator:
-        raise NotImplementedError
 
 
 class Constructor:

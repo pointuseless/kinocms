@@ -24,26 +24,6 @@ class Ticket:
         self.additional_info = additional_info
 
 
-# TODO: Не уверен, что именно так оно должно работать. Порисовать-подумать.
-class Purchase:
-
-    def __init__(self, amount: int, pay_system: PaySystemInterface):
-        self.amount = amount
-        self.pay_system = pay_system
-
-    def validate(self) -> bool:
-        if self.pay_system.validate_payment(self.amount):
-            return True
-        else:
-            return False
-
-
-class PaySystemInterface:
-    """ Интерфейс внешней платежной системы """
-    def validate_payment(self, amount: int) -> bool:
-        raise NotImplementedError
-
-
 # class ShowClonesRegistry:
 #
 #     @staticmethod
@@ -96,5 +76,6 @@ class Hello:
         self.ide = ide
 
 
-h = Hello('str')
-print(h.__dict__)
+if __name__ == '__main__':
+    h = Hello('str')
+    print(h.__dict__)
