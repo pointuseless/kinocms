@@ -107,6 +107,10 @@ class Sector(PlaceAggregate, PriceContainer):
         self.type = rows_type
         super().__init__(nested=rows, price=price)
 
+    @property
+    def rows(self) -> list[Row]:
+        return list(iter(self))
+
     def set_price(self, price: int) -> None:
         super().set_price(price)
         for each in self.nested:
@@ -118,6 +122,10 @@ class Hall(PlaceAggregate):
     def __init__(self, sectors: list[Sector], technology: str):
         self.technology = technology
         super().__init__(nested=sectors)
+
+    @property
+    def sectors(self) -> list[Sector]:
+        return list(iter(self))
 
 
 class PlaceAggregateIterator:
@@ -188,7 +196,6 @@ for sector in show:
 
 # --------- Вот теперь самое интересное: узнать цену места! --------- #
 
-place = list(show.iter_places())[74]
-print(place._id)
-print(show.hall.nested[0].set_price(40))
-print(show.hall.places[15].get_price())
+show.hall.sectors[0].set_price(45)
+place = show.hall.sectors[0].rows[0].places[3]
+print(place.get_price())
