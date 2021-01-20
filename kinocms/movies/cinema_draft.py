@@ -195,6 +195,8 @@ class Constructor:
         return Row(identification, cls.create_places(places, identification))
 
 
+# --------- Начало демонстрации --------- #
+
 rows = Constructor.create_rows(1, 9, 15)
 sectors = [Sector(rows[: 3], 'CHEAP'), Sector(rows[3: 8], 'MEDIUM'), Sector(rows[8:], 'VIP')]
 hall = Hall(sectors, 'Dolby Digital')
