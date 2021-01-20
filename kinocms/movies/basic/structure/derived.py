@@ -1,38 +1,10 @@
 from __future__ import annotations
 
-from datetime import timedelta, datetime
 from functools import singledispatchmethod
-from collections.abc import Iterator
 from typing import Union
+from collections.abc import Iterator
 
-
-class Movie:
-
-    def __init__(self, title: str, duration: timedelta):
-        self.title = title
-        self.duration = duration
-
-
-class CloneablePlaceContainerInterface:
-
-    def clone(self) -> CloneablePlaceContainerInterface:
-        raise NotImplementedError
-
-
-class PriceContainer(CloneablePlaceContainerInterface):
-
-    def __init__(self, price: int = 0, **kwargs):
-        self._price = price
-        super().__init__(**kwargs)
-
-    def get_price(self) -> int:
-        return self._price
-
-    def set_price(self, price: int) -> None:
-        self._price = price
-
-    def clone(self) -> PriceContainer:
-        raise NotImplementedError
+from kinocms.movies.basic.structure.abc import CloneablePlaceContainerInterface, PriceContainer
 
 
 class PlaceAggregate(CloneablePlaceContainerInterface):
@@ -125,6 +97,42 @@ class Hall(PlaceAggregate):
         return list(iter(self))
 
 
+class PlaceAggregateIteratorInterface:
+
+    @singledispatchmethod
+    def make_nested(self, composite: PlaceAggregate) -> list[PlaceAggregateIteratorInterface]:
+        raise NotImplementedError
+
+    @make_nested.register(Row)
+    def _(self, composite) -> list[Iterator[Place]]:
+        raise NotImplementedError
+
+    def __next__(self) -> Place:
+        raise NotImplementedError
+
+    def __iter__(self) -> PlaceAggregateIterator:
+        raise NotImplementedError
+
+
+class Constructor:
+
+    @classmethod
+    def create_places(cls, quantity: int, row_index: int) -> list[Place]:
+        return [Place(row_index * 1000 + i) for i in range(1, quantity + 1)]
+
+    @classmethod
+    def create_rows(cls, first: int, last: int, places: int) -> list[Row]:
+        rows = []
+        for i in range(first, last + 1):
+            row = Row(i, cls.create_places(places, i))
+            rows.append(row)
+        return rows
+
+    @classmethod
+    def create_row(cls, identification: int, places: int) -> Row:
+        return Row(identification, cls.create_places(places, identification))
+
+
 class PlaceAggregateIterator:
 
     def __init__(self, composite: PlaceAggregate):
@@ -150,69 +158,3 @@ class PlaceAggregateIterator:
 
     def __iter__(self) -> PlaceAggregateIterator:
         return self
-
-
-class Show:
-
-    def __init__(self, movie: Movie,
-                 hall: Hall,
-                 showtime: datetime):
-        self.movie = movie
-        self.hall = hall.clone()
-        self._showtime = showtime
-
-    @property
-    def showtime(self) -> datetime:
-        return self._showtime
-
-    @showtime.setter
-    def showtime(self, new_showtime: datetime) -> None:
-        self._showtime = new_showtime
-
-    def iter_places(self) -> PlaceAggregateIterator:
-        return self.hall.iter_places()
-
-    def __iter__(self) -> Iterator[Sector]:
-        return iter(self.hall)
-
-
-class Constructor:
-
-    @classmethod
-    def create_places(cls, quantity: int, row_index: int) -> list[Place]:
-        return [Place(row_index * 1000 + i) for i in range(1, quantity + 1)]
-
-    @classmethod
-    def create_rows(cls, first: int, last: int, places: int) -> list[Row]:
-        rows = []
-        for i in range(first, last + 1):
-            row = Row(i, cls.create_places(places, i))
-            rows.append(row)
-        return rows
-
-    @classmethod
-    def create_row(cls, identification: int, places: int) -> Row:
-        return Row(identification, cls.create_places(places, identification))
-
-
-# --------- Начало демонстрации --------- #
-
-rows = Constructor.create_rows(1, 9, 15)
-sectors = [Sector(rows[: 3], 'CHEAP'), Sector(rows[3: 8], 'MEDIUM'), Sector(rows[8:], 'VIP')]
-hall = Hall(sectors, 'Dolby Digital')
-
-movie = Movie('Super-Hero', timedelta(hours=1, minutes=55))
-
-show = Show(movie, hall, datetime(2021, 2, 12, 14, 30))
-
-for place in show.iter_places():
-    print(place._id)
-
-for sector in show:
-    print(sector.type)
-
-# --------- Вот теперь самое интересное: узнать цену места! --------- #
-
-show.hall.sectors[0].set_price(45)
-place = show.hall.sectors[0].rows[0].places[3]
-print(place.get_price())

@@ -1,11 +1,5 @@
 from __future__ import annotations
 
-from collections.abc import Callable
-from datetime import datetime
-from functools import singledispatchmethod
-
-from kinocms.movies.cinema_draft import Show
-
 
 # Либо тикету (можно его как отображение представить), давать уже готовую для него инфу
 # А создавать тикет с пережеванной инфой Фабрикой, например
