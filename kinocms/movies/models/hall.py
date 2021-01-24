@@ -9,9 +9,9 @@ from kinocms.movies.models.cinema import Cinema
 class Hall(Model):
 
     # TODO: Composite Keys
-    cinema = ForeignKey(Cinema, on_delete=CASCADE)
-    hall_number = IntegerField()
-    working = BooleanField(default=False)
+    cinema = ForeignKey(Cinema, on_delete=CASCADE, null=False)
+    hall_number = IntegerField(null=False)
+    working = BooleanField(default=False, null=False)
 
 
 # TODO: Row type is a separate Model
@@ -23,6 +23,12 @@ class Row(Model):
         VIP = 'VIP', gettext_lazy('VIP')
 
     hall = ForeignKey(Hall, on_delete=CASCADE)
+    row_number = IntegerField()
     type = CharField(max_length=15, choices=RowType.choices, default=RowType.REGULAR)
 
 
+class Seat(Model):
+
+    row = ForeignKey(Row, on_delete=CASCADE)
+    seat_number = IntegerField()
+    serviceable = BooleanField(default=True)
