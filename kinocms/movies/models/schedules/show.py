@@ -21,7 +21,7 @@ class Show(Model):
     vip_price = RestrictedIntegerField(null=False)
     medium_price = RestrictedIntegerField(null=False)
     cheap_price = RestrictedIntegerField(null=False)
-    stop_reservation = DateTimeField(default=timedelta())    # TODO: auto-calculate howto?
+    stop_reservation = DateTimeField(default=timedelta())    # TODO: auto-calculate howto? BUT w/o func dependency!
 
     class Meta:
         constraints = [UniqueConstraint(fields=['datetime', 'hall'], name='unique_show')]
