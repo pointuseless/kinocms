@@ -1,6 +1,6 @@
 from django.db.models import Model, ForeignKey, DO_NOTHING
 
-from kinocms.movies.models.misc.fields import AutoKey
+from kinocms.util.fields.fields import AutoKey
 from kinocms.movies.models.schedules.show import Show
 
 

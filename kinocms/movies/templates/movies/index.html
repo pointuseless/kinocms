@@ -1,7 +1,31 @@
 {% extends 'movies/base.html' %}
 
-{% block content %}
-<div class="container" style="color: red;">
-        <h1>Hello World!</h1>
+{% block body %}
+<div class="container-md">
+    <div class="row justify-content-end bg-dark">
+        <!-- nav container -->
+        <nav class="col col-md-6 navbar navbar-expand-md
+                    nav-justified navbar-dark bg-dark">
+            <!-- toggler -->
+            <button class="navbar-toggler"
+                    type="button"
+                    data-target="#navbar"
+                    aria-controls="navbar"
+                    aria-expanded="false"
+                    aria-label="navigation">
+                <!-- toggler icon -->
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- collapsing container -->
+            <div class="collapse navbar-collapse justify-content-center" id="navbar">
+                <!-- NAVIGATION MENU CONTENT -->
+                <div class="navbar-nav justify-content-center">
+                    <a class="nav-link" href="#schedules">
+                        Hello World
+                    </a>
+                </div>
+            </div>
+        </nav>
     </div>
+</div>
 {% endblock %}

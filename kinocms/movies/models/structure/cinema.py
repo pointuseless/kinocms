@@ -1,8 +1,7 @@
 from django.db.models import Model
-from django.db.models import IntegerField, CharField, ForeignKey, TextField, BooleanField
-from django.db.models import CASCADE
+from django.db.models import IntegerField, CharField, TextField
 
-from kinocms.movies.models.misc.fields import AutoKey
+from kinocms.util.fields.fields import AutoKey
 
 
 class Cinema(Model):

@@ -1,10 +1,10 @@
 from django.db.models import Model
-from django.db.models import ForeignKey, IntegerField, BooleanField, TextChoices, CharField
+from django.db.models import ForeignKey, BooleanField, TextChoices, CharField
 from django.db.models import CASCADE, UniqueConstraint
 from django.utils.translation import gettext_lazy
 
 from kinocms.movies.models.structure.cinema import Cinema
-from kinocms.movies.models.misc.fields import RestrictedIntegerField, AutoKey, NotNullableFalseBoolean
+from kinocms.util.fields.fields import RestrictedIntegerField, AutoKey, NotNullableFalseBoolean
 
 
 class Hall(Model):

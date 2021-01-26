@@ -3,7 +3,7 @@ from datetime import timedelta
 from django.db.models import Model, ForeignKey, DO_NOTHING, UniqueConstraint, DateTimeField
 from django.utils import timezone
 
-from kinocms.movies.models.misc.fields import AutoKey
+from kinocms.util.fields.fields import AutoKey
 from kinocms.movies.models.schedules.show import Show
 from kinocms.movies.models.structure.hall import Seat
 
