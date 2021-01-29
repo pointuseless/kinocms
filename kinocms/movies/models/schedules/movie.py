@@ -4,6 +4,7 @@ from kinocms.util.fields.fields import AutoKey
 from kinocms.util.fields.func import setup_fields_params
 
 
+# TODO: technologies
 class Movie(Model):
 
     movie_id = AutoKey()
