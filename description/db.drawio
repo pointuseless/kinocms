@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2021-01-30T19:42:00.733Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36" etag="Vn5PgBQ6WqHryUMibWvh" version="14.2.9" type="github">
+<mxfile host="app.diagrams.net" modified="2021-01-30T19:42:28.999Z" agent="5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.66 Safari/537.36" etag="C-5eh-gNiCvZvjp1tzSe" version="14.2.9" type="github">
   <diagram id="Vw4Sm47W4OSSpkKUUUvN" name="Page-1">
     <mxGraphModel dx="1952" dy="1714" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -397,7 +397,7 @@
         <mxCell id="WyKbzk6kCE-C1j6Ivgo5-57" value="Chr" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;" vertex="1" parent="WyKbzk6kCE-C1j6Ivgo5-56">
           <mxGeometry width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="WyKbzk6kCE-C1j6Ivgo5-58" value="Region" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="WyKbzk6kCE-C1j6Ivgo5-56">
+        <mxCell id="WyKbzk6kCE-C1j6Ivgo5-58" value="Street" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="WyKbzk6kCE-C1j6Ivgo5-56">
           <mxGeometry x="30" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="WyKbzk6kCE-C1j6Ivgo5-59" value="" style="shape=partialRectangle;collapsible=0;dropTarget=0;pointerEvents=0;fillColor=none;top=0;left=0;bottom=0;right=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" vertex="1" parent="WyKbzk6kCE-C1j6Ivgo5-52">
@@ -406,7 +406,7 @@
         <mxCell id="WyKbzk6kCE-C1j6Ivgo5-60" value="Chr" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;editable=1;overflow=hidden;" vertex="1" parent="WyKbzk6kCE-C1j6Ivgo5-59">
           <mxGeometry width="30" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="WyKbzk6kCE-C1j6Ivgo5-61" value="City" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="WyKbzk6kCE-C1j6Ivgo5-59">
+        <mxCell id="WyKbzk6kCE-C1j6Ivgo5-61" value="Building" style="shape=partialRectangle;connectable=0;fillColor=none;top=0;left=0;bottom=0;right=0;align=left;spacingLeft=6;overflow=hidden;" vertex="1" parent="WyKbzk6kCE-C1j6Ivgo5-59">
           <mxGeometry x="30" width="150" height="30" as="geometry" />
         </mxCell>
         <mxCell id="WyKbzk6kCE-C1j6Ivgo5-62" value="map.py" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;" vertex="1" parent="1">
