@@ -1,0 +1,31 @@
+/* line 5, movies/static/movies/scss/style.scss */
+body {
+  background-image: url("/static/movies/img/starwars.jpg");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-attachment: scroll;
+  background-size: 100%;
+  background-color: black; }
+
+/* line 15, movies/static/movies/scss/style.scss */
+#header-container {
+  background-color: #555 !important; }
+
+/* line 19, movies/static/movies/scss/style.scss */
+#logo-holder {
+  height: 100px; }
+
+/* line 23, movies/static/movies/scss/style.scss */
+header .col {
+  text-align: center; }
+
+/* line 28, movies/static/movies/scss/style.scss */
+header .search-input {
+  border: none;
+  border-radius: 0; }
+
+/* line 33, movies/static/movies/scss/style.scss */
+header .search-button {
+  border-radius: 0;
+  border: none;
+  background-color: red; }

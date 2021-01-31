@@ -1,0 +1,10 @@
+/* line 1, movies/static/movies/scss/style.scss */
+body {
+  background-image: url("/static/movies/img/starwars.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover; }
+
+/* line 8, movies/static/movies/scss/style.scss */
+#header-container {
+  background-color: rgba(89, 99, 65, 0.5) !important; }

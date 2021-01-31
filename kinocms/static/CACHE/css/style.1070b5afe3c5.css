@@ -1,0 +1,15 @@
+/* line 3, movies/static/movies/scss/style.scss */
+body {
+  background-image: url("/static/movies/img/starwars.jpg");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-attachment: scroll;
+  background-size: cover; }
+
+/* line 11, movies/static/movies/scss/style.scss */
+#header-container {
+  background-color: rgba(89, 89, 89, 0.9) !important; }
+
+/* line 15, movies/static/movies/scss/style.scss */
+#logo-holder {
+  min-height: 100px; }
