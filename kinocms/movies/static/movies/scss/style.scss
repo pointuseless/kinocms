@@ -1,0 +1,66 @@
+$neutral-trans: rgba(89, 89, 89, 0.5);
+$neutral: #555;
+$control-primary: red;
+
+body {
+    background-image: url('../img/starwars.jpg');
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-attachment: scroll;
+    background-size: 100%;
+    background-color: black;
+
+}
+
+#header-container {
+    background-color: $neutral !important;
+}
+
+#logo-holder {
+    height: 100px;
+}
+
+header .col {
+text-align: center;
+}
+
+.n-border {
+    border: 0;
+    border-radius: 0;
+}
+
+.navigation {
+    .col:first-child {
+        margin-left: 0;
+    }
+
+    .col:last-child {
+        margin-right: 0;
+    }
+}
+
+.btn-nav {
+        border: 1px groove;
+        border-radius: 2em;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 0.5em;
+        padding: 0;
+        max-width: fit-content;
+}
+@media (min-width: 1280px) {
+    .btn-nav {
+        min-width: fit-content;
+        max-width: none;
+    }
+}
+
+.navbar-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.btn-search {
+    background-color: orange;
+    }

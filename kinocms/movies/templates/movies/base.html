@@ -1,41 +1,147 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
 <head>
+    {% load static %}
+    <!--    {% load compress %}     -->
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-    <!-- Loading Bootstrap stylesheets via CDN" -->
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"-->
-<!--      rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"-->
-<!--      crossorigin="anonymous">-->
+    <title>
+        {% block title %}
+        {% endblock %}
+    </title>
 
-    <!-- Loading Bootstrap stylesheets from own project directory -->
+    <!-- Loading Bootstrap stylesheets via CDN   -->
+    <!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"  -->
+    <!--      rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"  -->
+    <!--      crossorigin="anonymous">  -->
+
+    <!--      Loading Bootstrap stylesheets as static   -->
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <style>
-    body {
-      background-image: url('https://www.itl.cat/pngfile/big/144-1446980_mass-effect-3-concept-art-hd-wide-wallpaper.jpg');
-      background-repeat: no-repeat;
-      background-attachment: fixed;
-      background-size: cover;
-    }
-    </style>
-    <title>Glance</title>
+
+    <!--      Connecting own static files     -->
+    <!--    <link href="{% static 'movies/css/style.css' %}" rel="stylesheet">-->
+
+    <!--    Compressing own Sass    -->
+    {% compress css %}
+    <link rel="stylesheet" type="text/x-scss" href="{% static 'movies/scss/style.scss' %}">
+    {% endcompress %}
 </head>
+
 <body>
-    {% block body %}
+
+    {% block hat %}
     {% endblock %}
 
-    <!-- Loading jQuery via CDN -->
+    <header>
+
+        <div id="header-container" class="container text-light">
+
+            <div class="row row-cols-3">
+
+                <div id="logo-holder" class="col-2 d-flex">
+                    <a href="/movies">
+                        <img class="header-logo" src="{% static 'movies/img/logo-trans.png' %}"
+                                           alt="Cinema-City">
+                    </a>
+                </div>
+
+                <div class="col-9">
+
+                    <div class="row row-cols-2 h-50 align-items-center">
+                        <div class="col col-8 h-100">
+                            <div class="row align-items-center h-100">
+                                <div class="col">SMM</div>
+                                <div class="col">SMM</div>
+                                <div class="col">SMM</div>
+                                <div class="col">SMM</div>
+                                <div class="col">SMM</div>
+                                <div class="col">SMM</div>
+                            </div>
+                        </div>
+                        <div class="col col-4">
+                            <form class="d-flex">
+                                <input class="form-control n-border" type="search" placeholder="Поиск" aria-label="Поиск">
+                                <button class="btn n-border btn-search" type="submit">Поиск</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <nav class="h-100 d-flex">
+                        <div class="container-fluid p-0">
+                            <div class="row row-cols-3 h-50 align-items-center">
+                                <div class="col col-10 h-100">
+                                    <div class="navigation row h-100 justify-content-between align-items-center">
+
+                                        <div class="col btn-nav">
+                                            <a class="navbar-link" href="/posters">Афиша</a>
+                                        </div>
+
+                                        <div class="col btn-nav">
+                                            <a class="navbar-link" href="/schedules">Расписание</a>
+                                        </div>
+
+                                        <div class="col btn-nav">
+                                            <a class="navbar-link" href="/soon">Скоро</a>
+                                        </div>
+
+                                        <div class="col btn-nav">
+                                            <a class="navbar-link" href="/cinemas">Кинотеатры</a>
+                                        </div>
+
+                                        <div class="col btn-nav">
+                                            <a class="navbar-link" href="/promo">Акции</a>
+                                        </div>
+
+                                        <div class="col btn-nav">
+                                            <a class="navbar-link" href="/about">О кинотеатре</a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="col col-2">Язык</div>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <div class="col col-1 text-light d-flex align-items-end justify-content-center">
+                    <a href="/login" class="navbar-link">
+                        <figure>
+                            <img src="{% static 'movies/img/login.png' %}"
+                                               alt="Cinema-City" height="40px;">
+                            <figcaption style="margin-top: -10px;">Войти</figcaption>
+                        </figure>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    {% block main %}
+    {% endblock %}
+
+    {% block footer %}
+    {% endblock %}
+
+    {% block shoe %}
+    {% endblock %}
+
+    <!--    Loading jQuery via CDN  -->
      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
              integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
              crossorigin="anonymous"></script>
-    <!-- Loading Bootstrap JS engine via CDN -->
-<!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"-->
-<!--            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"-->
-<!--            crossorigin="anonymous"></script>-->
 
-    <!-- Loading Bootstrap JS engine from own project directory -->
+    <!--    Loading Bootstrap JS engine via CDN     -->
+    <!--    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"    -->
+    <!--            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"     -->
+    <!--            crossorigin="anonymous"></script>   -->
+
+    <!--    Loading Bootstrap JS engine as static   -->
     <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>
