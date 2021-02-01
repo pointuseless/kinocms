@@ -1,0 +1,70 @@
+/* line 7, movies/static/movies/scss/style.scss */
+body {
+  background-image: url("/static/movies/img/starwars.jpg");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-attachment: scroll;
+  background-size: 100%;
+  background-color: black; }
+
+/* line 17, movies/static/movies/scss/style.scss */
+#header-container {
+  background-color: #555 !important; }
+
+/* line 21, movies/static/movies/scss/style.scss */
+#logo-holder {
+  height: 100px; }
+
+/* line 25, movies/static/movies/scss/style.scss */
+header .col {
+  text-align: center; }
+
+/* line 29, movies/static/movies/scss/style.scss */
+.n-border {
+  border: 0;
+  border-radius: 0; }
+
+/* line 35, movies/static/movies/scss/style.scss */
+.navigation .col:first-child {
+  margin-left: 0; }
+
+/* line 39, movies/static/movies/scss/style.scss */
+.navigation .col:last-child {
+  margin-right: 0; }
+
+/* line 44, movies/static/movies/scss/style.scss */
+.btn-nav {
+  border: 1px groove;
+  border-radius: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0.5em;
+  padding: 0;
+  max-width: fit-content; }
+
+@media (min-width: 1280px) {
+  /* line 55, movies/static/movies/scss/style.scss */
+  .btn-nav {
+    min-width: fit-content;
+    max-width: none; } }
+
+/* line 61, movies/static/movies/scss/style.scss */
+.navbar-link {
+  text-decoration: none;
+  color: inherit; }
+
+/* line 66, movies/static/movies/scss/style.scss */
+.btn-search {
+  background-color: orange; }
+
+/* line 70, movies/static/movies/scss/style.scss */
+.top-banner {
+  display: none; }
+
+@media (min-width: 768px) {
+  /* line 74, movies/static/movies/scss/style.scss */
+  .top-banner {
+    display: block;
+    width: 100%;
+    height: auto; } }

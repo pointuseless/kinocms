@@ -1,0 +1,84 @@
+/* line 8, movies/static/movies/scss/style.scss */
+.body-bg-holder {
+  background-image: url("/static/movies/img/starwars.jpg");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-attachment: scroll;
+  background-size: 100%;
+  background-color: black; }
+
+/* line 17, movies/static/movies/scss/style.scss */
+.container {
+  background-color: #555 !important; }
+
+/* line 21, movies/static/movies/scss/style.scss */
+#logo-holder {
+  height: 100px; }
+
+/* line 25, movies/static/movies/scss/style.scss */
+header .col {
+  text-align: center; }
+
+/* line 29, movies/static/movies/scss/style.scss */
+.n-border {
+  border: 0;
+  border-radius: 0; }
+
+/* line 35, movies/static/movies/scss/style.scss */
+.navigation * {
+  margin: 0 0.5em; }
+
+/* line 39, movies/static/movies/scss/style.scss */
+.navigation *:first-child {
+  margin-left: 0; }
+
+/* line 43, movies/static/movies/scss/style.scss */
+.navigation *:last-child {
+  margin-right: 0; }
+
+/* line 47, movies/static/movies/scss/style.scss */
+.navigation *:only-child {
+  margin: 0 0.5em; }
+
+/* line 65, movies/static/movies/scss/style.scss */
+.control {
+  background-color: orange;
+  color: #555; }
+  /* line 56, movies/static/movies/scss/style.scss */
+  .control:hover {
+    background-color: #555; }
+    /* line 59, movies/static/movies/scss/style.scss */
+    .control:hover :hover {
+      color: white; }
+
+/* line 69, movies/static/movies/scss/style.scss */
+.navigation__item {
+  border: 1px groove;
+  border-radius: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  max-width: fit-content; }
+
+@media (min-width: 1280px) {
+  /* line 79, movies/static/movies/scss/style.scss */
+  .navigation__item {
+    min-width: fit-content;
+    max-width: none; } }
+
+/* line 85, movies/static/movies/scss/style.scss */
+.link-mask {
+  text-decoration: none;
+  color: inherit; }
+
+/* line 90, movies/static/movies/scss/style.scss */
+.top-banner {
+  display: none; }
+
+@media (min-width: 768px) {
+  /* line 94, movies/static/movies/scss/style.scss */
+  .top-banner {
+    display: block;
+    width: 100%;
+    height: auto; } }

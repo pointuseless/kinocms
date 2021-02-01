@@ -1,0 +1,99 @@
+/* line 9, movies/static/movies/scss/style.scss */
+.body-bg-holder {
+  background-image: url("/static/movies/img/starwars.jpg");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-attachment: scroll;
+  background-size: 100%;
+  background-color: black;
+  color: white; }
+
+/* line 19, movies/static/movies/scss/style.scss */
+.container {
+  background-color: #555 !important; }
+
+/* line 23, movies/static/movies/scss/style.scss */
+#logo-holder {
+  height: 100px;
+  z-index: 1; }
+
+/* line 28, movies/static/movies/scss/style.scss */
+header .col {
+  text-align: center; }
+
+/* line 32, movies/static/movies/scss/style.scss */
+.n-border {
+  border: 0;
+  border-radius: 0; }
+
+/* line 50, movies/static/movies/scss/style.scss */
+.control {
+  background-color: orange;
+  color: #555; }
+  /* line 43, movies/static/movies/scss/style.scss */
+  .control.hover:hover {
+    background-color: #555;
+    color: white; }
+
+/* line 60, movies/static/movies/scss/style.scss */
+.navigation * {
+  margin: 0 0.5em; }
+
+/* line 64, movies/static/movies/scss/style.scss */
+.navigation *:first-child {
+  margin-left: 0; }
+
+/* line 68, movies/static/movies/scss/style.scss */
+.navigation *:last-child {
+  margin-right: 0; }
+
+/* line 72, movies/static/movies/scss/style.scss */
+.navigation *:only-child {
+  margin: 0 0.5em; }
+
+/* line 77, movies/static/movies/scss/style.scss */
+.navigation__item {
+  border: 1px groove;
+  border-radius: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  max-width: fit-content; }
+  /* line 86, movies/static/movies/scss/style.scss */
+  .navigation__item a {
+    width: 100%;
+    height: 100%; }
+
+@media (min-width: 1280px) {
+  /* line 92, movies/static/movies/scss/style.scss */
+  .navigation__item {
+    min-width: fit-content;
+    max-width: none; } }
+
+/* line 98, movies/static/movies/scss/style.scss */
+.link-mask {
+  text-decoration: none;
+  color: inherit; }
+  /* line 102, movies/static/movies/scss/style.scss */
+  .link-mask:hover {
+    color: inherit; }
+
+/* line 107, movies/static/movies/scss/style.scss */
+.top-banner {
+  display: none; }
+
+@media (min-width: 768px) {
+  /* line 111, movies/static/movies/scss/style.scss */
+  .top-banner {
+    display: block;
+    width: 100%;
+    height: auto; } }
+
+/* line 118, movies/static/movies/scss/style.scss */
+.top-carousel {
+  height: 500px; }
+
+/* line 122, movies/static/movies/scss/style.scss */
+.section__heading {
+  font-size: 2rem; }

@@ -1,0 +1,104 @@
+/* line 9, movies/static/movies/scss/style.scss */
+body {
+  font-family: Montserrat, Arial, sans-serif; }
+
+/* line 13, movies/static/movies/scss/style.scss */
+.body-bg-holder {
+  background-image: url("/static/movies/img/starwars.jpg");
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-attachment: scroll;
+  background-size: 100%;
+  background-color: black;
+  color: white; }
+
+/* line 23, movies/static/movies/scss/style.scss */
+.container {
+  background-color: #555 !important; }
+
+/* line 27, movies/static/movies/scss/style.scss */
+#logo-holder {
+  height: 100px;
+  z-index: 1; }
+
+/* line 32, movies/static/movies/scss/style.scss */
+header .col {
+  text-align: center; }
+
+/* line 36, movies/static/movies/scss/style.scss */
+.n-border {
+  border: 0;
+  border-radius: 0; }
+
+/* line 54, movies/static/movies/scss/style.scss */
+.control {
+  background-color: orange;
+  color: #555;
+  font-weight: 500; }
+  /* line 47, movies/static/movies/scss/style.scss */
+  .control.hover:hover {
+    background-color: #555;
+    color: white; }
+
+/* line 65, movies/static/movies/scss/style.scss */
+.navigation * {
+  margin: 0 0.5em; }
+
+/* line 69, movies/static/movies/scss/style.scss */
+.navigation *:first-child {
+  margin-left: 0; }
+
+/* line 73, movies/static/movies/scss/style.scss */
+.navigation *:last-child {
+  margin-right: 0; }
+
+/* line 77, movies/static/movies/scss/style.scss */
+.navigation *:only-child {
+  margin: 0 0.5em; }
+
+/* line 82, movies/static/movies/scss/style.scss */
+.navigation__item {
+  border: 1px groove;
+  border-radius: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  max-width: fit-content; }
+  /* line 91, movies/static/movies/scss/style.scss */
+  .navigation__item a {
+    width: 100%;
+    height: 100%; }
+
+@media (min-width: 1280px) {
+  /* line 97, movies/static/movies/scss/style.scss */
+  .navigation__item {
+    min-width: fit-content;
+    max-width: none; } }
+
+/* line 103, movies/static/movies/scss/style.scss */
+.link-mask {
+  text-decoration: none;
+  color: inherit; }
+  /* line 107, movies/static/movies/scss/style.scss */
+  .link-mask:hover {
+    color: inherit; }
+
+/* line 112, movies/static/movies/scss/style.scss */
+.top-banner {
+  display: none; }
+
+@media (min-width: 768px) {
+  /* line 116, movies/static/movies/scss/style.scss */
+  .top-banner {
+    display: block;
+    width: 100%;
+    height: auto; } }
+
+/* line 123, movies/static/movies/scss/style.scss */
+.top-carousel {
+  height: 500px; }
+
+/* line 127, movies/static/movies/scss/style.scss */
+.section__heading {
+  background-color: orange; }
