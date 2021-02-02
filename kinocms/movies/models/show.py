@@ -2,12 +2,12 @@ from __future__ import annotations
 from copy import deepcopy
 from datetime import timedelta
 
-from django.db.models import ForeignKey, CASCADE, Model, UniqueConstraint, DateTimeField
+from django.db.models import ForeignKey, CASCADE, Model, UniqueConstraint, DateTimeField, IntegerField
 
-from kinocms.movies.models.structure.hall import Hall
-from kinocms.util.fields.fields import RestrictedIntegerField, AutoKey
-from kinocms.movies.models.schedules.movie import Movie
-from kinocms.util.fields.func import setup_fields_params
+from .hall import Hall
+from .movie import Movie
+from util.fields.fields import AutoKey
+from util.fields.func import setup_fields_params
 
 DEFAULT_RESERVATION_STOP = timedelta(minutes=30)    # TODO: how? Maybe via separate service that deletes expired...
 
@@ -18,9 +18,9 @@ class Show(Model):
     datetime = DateTimeField()
     hall = ForeignKey(Hall, on_delete=CASCADE)
     movie = ForeignKey(Movie, on_delete=CASCADE)
-    vip_price = RestrictedIntegerField()
-    medium_price = RestrictedIntegerField()
-    cheap_price = RestrictedIntegerField()
+    vip_price = IntegerField()
+    medium_price = IntegerField()
+    cheap_price = IntegerField()
 
     setup_fields_params([datetime, hall, movie, vip_price, medium_price, cheap_price],
                         {'null': False, 'db_index': True})

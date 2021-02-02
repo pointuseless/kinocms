@@ -1,6 +1,6 @@
 $neutral-trans: rgba(89, 89, 89, 0.5);
 $main-color: white;
-$neutral: #555;
+$neutral: #333;
 $neutral-hover: #777;
 $highlight: orange;
 $control-hover: #ffa500;
@@ -20,8 +20,21 @@ font-family: Montserrat, Arial, sans-serif;
     color: $main-color;
 }
 
-.container {
+section {
     background-color: $neutral !important;
+    color: black;
+}
+
+header, footer {
+    color: white;
+}
+
+header {
+    background-color: $neutral;
+}
+
+footer {
+    background-color: darken($neutral, 15%);
 }
 
 #logo-holder {
@@ -143,8 +156,12 @@ text-align: center;
   height: 100%;
 }
 
-.movie-card {
-    figure {
+.embossing {
+    background-color: lighten($neutral, 20%);
+    box-shadow: 0.25em 0.25em darken($neutral, 20%);
+}
 
-    }
+footer p {
+font-size: 80%;
+font-weight: 300;
 }

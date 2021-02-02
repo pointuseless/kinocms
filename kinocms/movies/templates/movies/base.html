@@ -39,92 +39,87 @@
     {% endblock %}
 
     <div class="body-bg-holder">
-        <header>
+        <header id="header-container" class="container">
 
-            <div id="header-container" class="container">
+            <div class="row row-cols-3">
 
-                <div class="row row-cols-3">
+                <div id="logo-holder" class="col-2 d-flex">
+                    <a href="/movies">
+                        <img id="header-logo" src="{% static 'movies/img/logo-trans.png' %}"
+                                           alt="Cinema-City">
+                    </a>
+                </div>
 
-                    <div id="logo-holder" class="col-2 d-flex">
-                        <a href="/movies">
-                            <img id="header-logo" src="{% static 'movies/img/logo-trans.png' %}"
-                                               alt="Cinema-City">
-                        </a>
-                    </div>
+                <div class="col-9">
 
-                    <div class="col-9">
-
-                        <div class="row row-cols-2 h-50 align-items-center">
-                            <div class="col col-8 h-100">
-                                <div class="row align-items-center h-100">
-                                    <div class="col">SMM</div>
-                                    <div class="col">SMM</div>
-                                    <div class="col">SMM</div>
-                                    <div class="col">SMM</div>
-                                    <div class="col">SMM</div>
-                                    <div class="col">SMM</div>
-                                </div>
-                            </div>
-                            <div class="col col-4">
-                                <form class="d-flex">
-                                    <input class="form-control n-border" type="search" placeholder="Поиск" aria-label="Поиск">
-                                    <button class="btn n-border control" type="submit">Поиск</button>
-                                </form>
+                    <div class="row row-cols-2 h-50 align-items-center">
+                        <div class="col col-8 h-100">
+                            <div class="row align-items-center h-100">
+                                <div class="col">SMM</div>
+                                <div class="col">SMM</div>
+                                <div class="col">SMM</div>
+                                <div class="col">SMM</div>
+                                <div class="col">SMM</div>
+                                <div class="col">SMM</div>
                             </div>
                         </div>
+                        <div class="col col-4">
+                            <form class="d-flex">
+                                <input class="form-control n-border" type="search" placeholder="Поиск" aria-label="Поиск">
+                                <button class="btn n-border control" type="submit">Поиск</button>
+                            </form>
+                        </div>
+                    </div>
 
-                        <nav class="h-100 d-flex">
-                            <div class="container-fluid p-0">
-                                <div class="row row-cols-3 h-50 align-items-center">
-                                    <div class="col col-10 h-100">
-                                        <div class="navigation row h-100 justify-content-between align-items-center rounded-pill">
+                    <nav class="h-100 d-flex">
+                        <div class="container-fluid p-0">
+                            <div class="row row-cols-3 h-50 align-items-center">
+                                <div class="col col-10 h-100">
+                                    <div class="navigation row h-100 justify-content-between align-items-center rounded-pill">
 
-                                            <div class="col navigation__item control hover">
-                                                <a class="link-mask" href="/posters">Афиша</a>
-                                            </div>
-
-                                            <div class="col navigation__item control hover">
-                                                <a class="link-mask" href="/schedules">Расписание</a>
-                                            </div>
-
-                                            <div class="col navigation__item control hover">
-                                                <a class="link-mask" href="/soon">Скоро</a>
-                                            </div>
-
-                                            <div class="col navigation__item control hover">
-                                                <a class="link-mask" href="/cinemas">Кинотеатры</a>
-                                            </div>
-
-                                            <div class="col navigation__item control hover">
-                                                <a class="link-mask" href="/promo">Акции</a>
-                                            </div>
-
-                                            <div class="col navigation__item control hover">
-                                                <a class="link-mask" href="/about">О кинотеатре</a>
-                                            </div>
-
+                                        <div class="col navigation__item control hover">
+                                            <a class="link-mask" href="/posters">Афиша</a>
                                         </div>
+
+                                        <div class="col navigation__item control hover">
+                                            <a class="link-mask" href="/schedules">Расписание</a>
+                                        </div>
+
+                                        <div class="col navigation__item control hover">
+                                            <a class="link-mask" href="/soon">Скоро</a>
+                                        </div>
+
+                                        <div class="col navigation__item control hover">
+                                            <a class="link-mask" href="/cinemas">Кинотеатры</a>
+                                        </div>
+
+                                        <div class="col navigation__item control hover">
+                                            <a class="link-mask" href="/promo">Акции</a>
+                                        </div>
+
+                                        <div class="col navigation__item control hover">
+                                            <a class="link-mask" href="/about">О кинотеатре</a>
+                                        </div>
+
                                     </div>
-                                    <div class="col col-2">Язык</div>
                                 </div>
+                                <div class="col col-2">Язык</div>
                             </div>
-                        </nav>
-                    </div>
+                        </div>
+                    </nav>
+                </div>
 
-                    <div class="col col-1 text-light d-flex align-items-end justify-content-center">
-                        <a href="/login" class="link-mask">
-                            <figure>
-                                <img src="{% static 'movies/img/login.png' %}"
-                                                   alt="Cinema-City" height="40px;">
-                                <figcaption style="margin-top: -10px;">Войти</figcaption>
-                            </figure>
-                        </a>
-                    </div>
-
+                <div class="col col-1 d-flex align-items-end justify-content-center">
+                    <a href="/login" class="link-mask">
+                        <figure>
+                            <img src="{% static 'movies/img/login.png' %}"
+                                               alt="Cinema-City" height="40px;">
+                            <figcaption style="margin-top: -10px;">Войти</figcaption>
+                        </figure>
+                    </a>
                 </div>
 
             </div>
-
         </header>
 
         <main>
@@ -132,9 +127,57 @@
             {% endblock %}
         </main>
 
-        <footer>
-            {% block footer %}
-            {% endblock %}
+        <footer id ="footer-container" class="container">
+
+            <div class="row mt-3 pt-2 justify-content-around text-center">
+
+                <div class="col-3 mt-4 me-4 d-flex flex-column align-self-end">
+                    <h6>Мобильные приложения</h6>
+                    <div class="row row-cols-1 row-cols-lg-2 mb-4">
+                        <div class="col"><img src="{% static 'movies/img/android-app.png' %}" style="max-width: 100%; min-width: auto;"></div>
+                        <div class="col"><img src="{% static 'movies/img/android-app.png' %}" style="max-width: 100%; min-width: auto;"></div>
+                    </div>
+                    <p>Разработка сайтов: AVADA-MEDIA</p>
+                </div>
+
+                <div class="col-4 ms-4">
+                    <nav>
+                        <div class="row text-start">
+                            <div class="col d-flex flex-column">
+                                <a class="link-mask mb-2" href="/posters"><h6>Афиша</h6></a>
+                                <a href="/schedules" class="link-mask"><p>Расписание</p></a>
+                                <a href="/soon" class="link-mask"><p>Скоро в прокате</p></a>
+                                <a href="/cinemas" class="link-mask"><p>Кинотеатры</p></a>
+                                <a href="/promo" class="link-mask"><p>Акции</p></a>
+                            </div>
+                            <div class="col d-flex flex-column">
+                                <a class="link-mask mb-2" href="/about"><h6>О кинотеатре</h6></a>
+                                <a href="/news" class="link-mask"><p>Новости</p></a>
+                                <a href="/adds" class="link-mask"><p>Реклама</p></a>
+                                <a href="/cafe" class="link-mask"><p>Кафе-бар</p></a>
+                                <a href="/contacts" class="link-mask"><p>Контакты</p></a>
+                            </div>
+                        </div>
+                    </nav>
+                </div>
+
+                <div class="col col-2 mt-2">
+                    <div class="row h-100 row-cols-2 row-cols-lg-3 justify-content-evenly align-items-center">
+                        <div class="col d-flex"><img src="{% static 'movies/img/viber.png' %}" style="max-width: 100%; min-width: auto;"></div>
+                        <div class="col"><img src="{% static 'movies/img/viber.png' %}" style="max-width: 100%; min-width: auto;"></div>
+                        <div class="col"><img src="{% static 'movies/img/viber.png' %}" style="max-width: 100%; min-width: auto;"></div>
+                        <div class="col"><img src="{% static 'movies/img/viber.png' %}" style="max-width: 100%; min-width: auto;"></div>
+                        <div class="col"><img src="{% static 'movies/img/viber.png' %}" style="max-width: 100%; min-width: auto;"></div>
+                        <div class="col"><img src="{% static 'movies/img/viber.png' %}" style="max-width: 100%; min-width: auto;"></div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-center pt-3">
+                <p>(c) Cinema-City 2021, All rights reserved</p>
+            </div>
+
         </footer>
 
     </div>

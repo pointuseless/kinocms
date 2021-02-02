@@ -129,6 +129,8 @@ STATICFILES_DIRS = [
     BASE_DIR / 'vendors' / 'static',
 ]
 
+# SASS compressor related settings
+
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss', 'django_libsass.SassCompiler'),
 )

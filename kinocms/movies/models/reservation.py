@@ -3,9 +3,9 @@ from datetime import timedelta
 from django.db.models import Model, ForeignKey, DO_NOTHING, UniqueConstraint, DateTimeField
 from django.utils import timezone
 
-from kinocms.util.fields.fields import AutoKey
-from kinocms.movies.models.schedules.show import Show
-from kinocms.movies.models.structure.hall import Seat
+from util.fields.fields import AutoKey
+from .show import Show
+from .hall import Seat
 
 
 DEFAULT_TIMEOUT = timezone.now() + timedelta(minutes=30)

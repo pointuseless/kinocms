@@ -1,17 +1,17 @@
 from django.db.models import Model
 from django.db.models import ForeignKey, BooleanField, TextChoices, CharField
-from django.db.models import CASCADE, UniqueConstraint
+from django.db.models import CASCADE, UniqueConstraint, IntegerField
 from django.utils.translation import gettext_lazy
 
-from kinocms.movies.models.structure.cinema import Cinema
-from kinocms.util.fields.fields import RestrictedIntegerField, AutoKey, NotNullableFalseBoolean
+from .cinema import Cinema
+from util.fields.fields import AutoKey, NotNullableFalseBoolean
 
 
 class Hall(Model):
 
     hall_id = AutoKey()
     cinema = ForeignKey(Cinema, on_delete=CASCADE, null=False)
-    number = RestrictedIntegerField(min_value=1, max_value=19)
+    number = IntegerField()
     working = NotNullableFalseBoolean()
     two_dim = NotNullableFalseBoolean()
     three_dim = NotNullableFalseBoolean()
@@ -30,7 +30,7 @@ class Row(Model):
 
     row_id = AutoKey()
     hall = ForeignKey(Hall, on_delete=CASCADE)
-    number = RestrictedIntegerField(min_value=1, max_value=19)
+    number = IntegerField()
     type = CharField(max_length=15, choices=RowType.choices, default=RowType.REGULAR)
 
     class Meta:
@@ -41,7 +41,7 @@ class Seat(Model):
 
     seat_id = AutoKey()
     row = ForeignKey(Row, on_delete=CASCADE)
-    number = RestrictedIntegerField(min_value=1, max_value=99)
+    number = IntegerField()
     serviceable = BooleanField(default=True)
 
     class Meta:

@@ -1,7 +1,7 @@
 from django.db.models import Model, UniqueConstraint, CharField, ForeignKey, DO_NOTHING
 
-from kinocms.util.fields.fields import AutoKey
-from kinocms.util.fields.func import setup_fields_params
+from util.fields.fields import AutoKey
+from util.fields.func import setup_fields_params
 
 
 class City(Model):
